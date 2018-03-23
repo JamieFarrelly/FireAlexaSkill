@@ -15,6 +15,8 @@ public class Account {
     private CurrencyTypeDescription currency;
 
     private Long balance;
+    
+    private Integer ican; // this is the id of the account
 
     public String getName() {
         return name;
@@ -38,5 +40,13 @@ public class Account {
 
     public void setBalance(Long balance) {
         this.balance = balance;
+    }
+
+    public Integer getIcan() {
+        return ican;
+    }
+
+    public void setIcan(Integer ican) {
+        this.ican = ican;
     }
 }

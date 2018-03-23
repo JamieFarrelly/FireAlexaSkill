@@ -12,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 import com.jamiefarrelly.PayWithFireAlexa.model.incoming.ApiAccessToken;
 import com.jamiefarrelly.PayWithFireAlexa.model.incoming.NewApiAccessTokenRequest;
 import com.jamiefarrelly.PayWithFireAlexa.model.incoming.NewBatchRequest;
+import com.jamiefarrelly.PayWithFireAlexa.model.incoming.NewBatchRequestItemInternalTransfer;
 import com.jamiefarrelly.PayWithFireAlexa.model.outgoing.Account;
 import com.jamiefarrelly.PayWithFireAlexa.model.outgoing.Accounts;
 import com.jamiefarrelly.PayWithFireAlexa.model.outgoing.NewBatchRequestResponse;
@@ -26,6 +27,7 @@ public class PayWithFireAPI {
     private static final String GET_ACCOUNT_DETAILS_URL = "https://api.paywithfire.com/business/v1/accounts";
     
     private static final String CREATE_BATCH_REQUEST_URL = "https://api.paywithfire.com/business/v1/batches";
+    private static final String ADD_INTERNAL_TRANSFER_ITEM_TO_BATCH_REQUEST_URL = "https://api.paywithfire.com/business/v1/batches/{uuid}/internaltransfers";
     
     // for now this is hard coded - don't want to store these details for multiple users for example (security wise)
     // IMPORTANT - never commit these details to the likes of Github
@@ -75,8 +77,6 @@ public class PayWithFireAPI {
         HttpHeaders headers = new HttpHeaders();
         headers.add(AUTH_HEADER_TXT, BEARER_TXT + token.getAccessToken());
         
-        // HttpEntity<String> entity = new HttpEntity<String>("parameters", headers); TODO: cleanup
-        
         NewBatchRequest newBatchRequest = new NewBatchRequest(); // we'll leave out all the optional fields like batch names and so on
         newBatchRequest.setCurrency(currency);
         newBatchRequest.setType(batchType);
@@ -85,6 +85,34 @@ public class PayWithFireAPI {
                         restTemplate.exchange(CREATE_BATCH_REQUEST_URL, HttpMethod.POST, new HttpEntity<NewBatchRequest>(newBatchRequest, headers), NewBatchRequestResponse.class);
         
         return response.getBody();
+    }
+    
+    /**
+     * Adds an internal transfer item to a batch request
+     * 
+     * @param batchRequestUuid - this must be from an internal batch request, there's a few different types of batch requests (they can not be mixed)
+     * @param accountIdFrom - the id from the Account you want to send money from (it's the ican that's returned in the {@link #getAccounts()} endpoint)
+     * @param accountIdTo - the id from the Account you want to send money to
+     * @param amount - 100 for example is €1 or £1 depending on the currency of the batch that was created in the first place
+     */
+    public static void addInternalTransferToBatch(String batchRequestUuid, Integer accountIdFrom, Integer accountIdTo, Long amount) {
+        
+        System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
+        
+        // first, call over to the API to get an access token - see https://paywithfire.com/docs/ for more info
+        ApiAccessToken token = getApiAuthToken();
+        
+        // next, call over to get the details of all of your accounts
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(AUTH_HEADER_TXT, BEARER_TXT + token.getAccessToken());
+        
+        NewBatchRequestItemInternalTransfer internalTransferItem = new NewBatchRequestItemInternalTransfer(); // we'll leave out all the optional fields
+        internalTransferItem.setAmount(amount);
+        internalTransferItem.setIcanFrom(accountIdFrom);
+        internalTransferItem.setIcanTo(accountIdTo);
+
+        restTemplate.exchange(ADD_INTERNAL_TRANSFER_ITEM_TO_BATCH_REQUEST_URL, HttpMethod.POST, new HttpEntity<NewBatchRequestItemInternalTransfer>(internalTransferItem, headers), 
+                                                                                                                                  NewBatchRequestResponse.class, batchRequestUuid);
     }
 
     // PRIVATE ------------------------------------------------------------------------------------------------------------------------------
