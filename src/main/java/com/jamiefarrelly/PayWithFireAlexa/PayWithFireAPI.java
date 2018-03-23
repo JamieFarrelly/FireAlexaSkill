@@ -120,6 +120,8 @@ public class PayWithFireAPI {
     /**
      * Create a new batch request
      * 
+     * @param currency
+     * @param batchType
      * @return NewBatchRequestResponse
      */
     private NewBatchRequestResponse createBatchRequest(OperatingCurrencyType currency, BatchRequestType batchType) {
