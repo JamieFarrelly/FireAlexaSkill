@@ -71,11 +71,58 @@ public class PayWithFireAPI {
     }
     
     /**
+     * Transfer money between one fire account to another fire account. Handles the three API calls that are needed to do this.
+     * 
+     * @param currency
+     * @param amount
+     * @param accountIdFrom
+     * @param accountIdTo
+     */
+    public void performInternalTransfer(OperatingCurrencyType currency, Long amount, Integer accountIdFrom, Integer accountIdTo) {
+        
+        // create a batch
+        NewBatchRequestResponse newBatchResponse = createBatchRequest(currency, BatchRequestType.INTERNAL_TRANSFER);
+        
+        String batchUuid = newBatchResponse.getBatchUuid();
+        
+        // add an item to the batch
+        addInternalTransferToBatch(batchUuid, accountIdFrom, accountIdTo, amount);
+        
+        // submit the batch
+        submitBatchRequest(batchUuid);
+    }
+
+    // PRIVATE ------------------------------------------------------------------------------------------------------------------------------
+    /**
+     * Calls over to get an auth token so we can call other endpoints like the account details endpoint
+     * 
+     * Take a look at https://paywithfire.com/docs/ for more info
+     * 
+     * @return ApiAccessToken
+     */
+    private ApiAccessToken getApiAuthToken() {
+        
+        NewApiAccessTokenRequest newApiAccessTokenRequest = new NewApiAccessTokenRequest();
+        
+        Long now = System.currentTimeMillis();
+        
+        // 3 pieces of info you get from business.paywithfire.com
+        newApiAccessTokenRequest.setClientId(CLIENT_ID);
+        newApiAccessTokenRequest.setRefreshToken(REFRESH_TOKEN);
+        newApiAccessTokenRequest.setClientSecret(DigestUtils.sha256Hex(now + CLIENT_KEY)); // as per docs https://paywithfire.com/docs/ 
+        
+        newApiAccessTokenRequest.setNonce(now);
+        
+        ApiAccessToken token = restTemplate.postForObject(CREATE_ACCESS_TOKEN_URL, newApiAccessTokenRequest, ApiAccessToken.class);
+        return token;
+    }
+    
+    /**
      * Create a new batch request
      * 
      * @return NewBatchRequestResponse
      */
-    public NewBatchRequestResponse createBatchRequest(OperatingCurrencyType currency, BatchRequestType batchType) {
+    private NewBatchRequestResponse createBatchRequest(OperatingCurrencyType currency, BatchRequestType batchType) {
         
         System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
         
@@ -103,7 +150,7 @@ public class PayWithFireAPI {
      * @param accountIdTo - the id from the Account you want to send money to
      * @param amount - 100 for example is €1 or £1 depending on the currency of the batch that was created in the first place
      */
-    public void addInternalTransferToBatch(String batchRequestUuid, Integer accountIdFrom, Integer accountIdTo, Long amount) {
+    private void addInternalTransferToBatch(String batchRequestUuid, Integer accountIdFrom, Integer accountIdTo, Long amount) {
         
         System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
         
@@ -128,7 +175,7 @@ public class PayWithFireAPI {
      * 
      * @param batchRequestUuid
      */
-    public void submitBatchRequest(String batchRequestUuid) {
+    private void submitBatchRequest(String batchRequestUuid) {
         
         System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
         
@@ -141,30 +188,5 @@ public class PayWithFireAPI {
         HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
 
         restTemplate.exchange(SUBMIT_BATCH_REQUEST_URL, HttpMethod.PUT, entity, Void.class, batchRequestUuid);
-    }
-
-    // PRIVATE ------------------------------------------------------------------------------------------------------------------------------
-    /**
-     * Calls over to get an auth token so we can call other endpoints like the account details endpoint
-     * 
-     * Take a look at https://paywithfire.com/docs/ for more info
-     * 
-     * @return ApiAccessToken
-     */
-    private ApiAccessToken getApiAuthToken() {
-        
-        NewApiAccessTokenRequest newApiAccessTokenRequest = new NewApiAccessTokenRequest();
-        
-        Long now = System.currentTimeMillis();
-        
-        // 3 pieces of info you get from business.paywithfire.com
-        newApiAccessTokenRequest.setClientId(CLIENT_ID);
-        newApiAccessTokenRequest.setRefreshToken(REFRESH_TOKEN);
-        newApiAccessTokenRequest.setClientSecret(DigestUtils.sha256Hex(now + CLIENT_KEY)); // as per docs https://paywithfire.com/docs/ 
-        
-        newApiAccessTokenRequest.setNonce(now);
-        
-        ApiAccessToken token = restTemplate.postForObject(CREATE_ACCESS_TOKEN_URL, newApiAccessTokenRequest, ApiAccessToken.class);
-        return token;
     }
 }

@@ -3,6 +3,7 @@ package com.jamiefarrelly.PayWithFireAlexa;
 import java.util.List;
 
 import com.amazon.speech.slu.Intent;
+import com.amazon.speech.slu.Slot;
 import com.amazon.speech.speechlet.IntentRequest;
 import com.amazon.speech.speechlet.LaunchRequest;
 import com.amazon.speech.speechlet.Session;
@@ -23,6 +24,10 @@ import com.jamiefarrelly.PayWithFireAlexa.model.outgoing.Account;
 public class PayWithFireSpeechlet implements Speechlet {
     
     private static final PayWithFireAPI FIRE_API = new PayWithFireAPI();
+    
+    // keys to get information from the utterance
+    private static final String FROM_ACCOUNT_SLOT = "FromAccount";
+    private static final String TO_ACCOUNT_SLOT = "ToAccount";
 
     // PUBLIC ---------------------------------------------------------------------------------------------
     public SpeechletResponse onIntent(IntentRequest request, Session session) throws SpeechletException {
@@ -32,6 +37,8 @@ public class PayWithFireSpeechlet implements Speechlet {
         
         if ("PayWithFireBalanceIntent".equals(intentName)) {
             return getBalanceResponse();
+        } else if ("PayWithFireInternalTransferIntent".equals(intentName)) {
+            return getMakeInternalTransferResponse(intent);
         } else if ("AMAZON.HelpIntent".equals(intentName)) {
             return getHelpResponse();
         } else {
@@ -114,6 +121,43 @@ public class PayWithFireSpeechlet implements Speechlet {
         speech.setText(speechText);
 
         return SpeechletResponse.newTellResponse(speech, card);
+    }
+    
+    /**
+     * WIP 
+     */
+    private SpeechletResponse getMakeInternalTransferResponse(Intent intent) {
+        
+        Slot fromAccountSlot = intent.getSlot(FROM_ACCOUNT_SLOT);
+        Slot toAccountSlot = intent.getSlot(TO_ACCOUNT_SLOT);
+        
+        // make sure the account names that the user said are actually valid account names
+        // TODO: Look in to removing the need of slots for account names, you shouldn't need to update LIST_OF_ACCOUNT_NAMES.txt every time you've a new Fire account
+        if (fromAccountSlot != null && fromAccountSlot.getValue() != null && toAccountSlot != null && toAccountSlot.getValue() != null) {
+            
+            String fromAccount = fromAccountSlot.getValue();
+            String toAccount = toAccountSlot.getValue();
+                            
+            // Get list of fire accounts
+            List<Account> fireAccounts = FIRE_API.getAccounts();
+            
+            boolean fromAccountExists = fireAccounts.stream().anyMatch(acc -> acc.getName().equalsIgnoreCase(fromAccount));
+            boolean toAccountExists = fireAccounts.stream().anyMatch(acc -> acc.getName().equalsIgnoreCase(toAccount));
+            
+            // paranoid check, should never happen. if we have the account name in LIST_OF_ACCOUNT_NAMES.txt it should match one of your Fire accounts
+            if (fromAccountExists == false || toAccountExists == false) {
+                return getHelpResponse(); // TODO: have 2 help responses for the two different intents
+            }
+            
+            // FIXME: finally, perform the internal transfer
+            // FIRE_API.performInternalTransfer(currency, amount, accountIdFrom, accountIdTo);
+            
+        } else {
+            // There was no item in the intent so return the help prompt.
+            return getHelpResponse(); // TODO: have 2 help responses for the two different intents
+        }
+        
+        return null;
     }
     
     /**
