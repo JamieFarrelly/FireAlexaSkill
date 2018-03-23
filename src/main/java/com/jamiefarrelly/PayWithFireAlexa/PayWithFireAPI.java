@@ -53,7 +53,7 @@ public class PayWithFireAPI {
      * 
      * @return List<Account>
      */
-    public static List<Account> getAccounts() {
+    public List<Account> getAccounts() {
         
         System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
         
@@ -75,7 +75,7 @@ public class PayWithFireAPI {
      * 
      * @return NewBatchRequestResponse
      */
-    public static NewBatchRequestResponse createBatchRequest(OperatingCurrencyType currency, BatchRequestType batchType) {
+    public NewBatchRequestResponse createBatchRequest(OperatingCurrencyType currency, BatchRequestType batchType) {
         
         System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
         
@@ -103,7 +103,7 @@ public class PayWithFireAPI {
      * @param accountIdTo - the id from the Account you want to send money to
      * @param amount - 100 for example is €1 or £1 depending on the currency of the batch that was created in the first place
      */
-    public static void addInternalTransferToBatch(String batchRequestUuid, Integer accountIdFrom, Integer accountIdTo, Long amount) {
+    public void addInternalTransferToBatch(String batchRequestUuid, Integer accountIdFrom, Integer accountIdTo, Long amount) {
         
         System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
         
@@ -128,7 +128,7 @@ public class PayWithFireAPI {
      * 
      * @param batchRequestUuid
      */
-    public static void submitBatchRequest(String batchRequestUuid) {
+    public void submitBatchRequest(String batchRequestUuid) {
         
         System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
         
@@ -151,7 +151,7 @@ public class PayWithFireAPI {
      * 
      * @return ApiAccessToken
      */
-    private static ApiAccessToken getApiAuthToken() {
+    private ApiAccessToken getApiAuthToken() {
         
         NewApiAccessTokenRequest newApiAccessTokenRequest = new NewApiAccessTokenRequest();
         

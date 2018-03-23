@@ -21,6 +21,8 @@ import com.jamiefarrelly.PayWithFireAlexa.model.outgoing.Account;
  * Based on https://github.com/amzn/alexa-skills-kit-java
  */
 public class PayWithFireSpeechlet implements Speechlet {
+    
+    private static final PayWithFireAPI FIRE_API = new PayWithFireAPI();
 
     // PUBLIC ---------------------------------------------------------------------------------------------
     public SpeechletResponse onIntent(IntentRequest request, Session session) throws SpeechletException {
@@ -85,7 +87,7 @@ public class PayWithFireSpeechlet implements Speechlet {
      */
     private SpeechletResponse getBalanceResponse() {
         
-        List<Account> fireAccounts = PayWithFireAPI.getAccounts();
+        List<Account> fireAccounts = FIRE_API.getAccounts();
         
         String speechText = "";
         double amount;
