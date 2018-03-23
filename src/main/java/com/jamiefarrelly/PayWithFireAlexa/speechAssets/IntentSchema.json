@@ -4,6 +4,19 @@
       "intent": "PayWithFireBalanceIntent"
     },
     {
+      "intent": "PayWithFireInternalTransferIntent",
+      "slots": [
+        {
+          "name" : "FromAccount",
+          "type": "LIST_OF_ACCOUNT_NAMES"
+        },
+        {
+          "name" : "ToAccount",
+          "type": "LIST_OF_ACCOUNT_NAMES"
+        }
+      ]
+    },
+    {
       "intent": "AMAZON.HelpIntent"
     }
   ]
