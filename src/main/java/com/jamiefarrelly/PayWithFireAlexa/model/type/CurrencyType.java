@@ -1,4 +1,4 @@
-package com.jamiefarrelly.PayWithFireAlexa.model;
+package com.jamiefarrelly.PayWithFireAlexa.model.type;
 
 public enum CurrencyType {
 

@@ -14,7 +14,7 @@ import com.amazon.speech.speechlet.SpeechletResponse;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
-import com.jamiefarrelly.PayWithFireAlexa.model.Account;
+import com.jamiefarrelly.PayWithFireAlexa.model.outgoing.Account;
 
 /**
  * 

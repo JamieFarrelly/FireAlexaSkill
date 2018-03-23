@@ -5,7 +5,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.jamiefarrelly.PayWithFireAlexa.model.Account;
+import com.jamiefarrelly.PayWithFireAlexa.model.outgoing.Account;
 
 public class PayWithFireAPITest {
 

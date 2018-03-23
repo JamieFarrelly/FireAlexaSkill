@@ -1,4 +1,6 @@
-package com.jamiefarrelly.PayWithFireAlexa.model;
+package com.jamiefarrelly.PayWithFireAlexa.model.outgoing;
+
+import com.jamiefarrelly.PayWithFireAlexa.model.type.CurrencyType;
 
 public class CurrencyTypeDescription {
     
