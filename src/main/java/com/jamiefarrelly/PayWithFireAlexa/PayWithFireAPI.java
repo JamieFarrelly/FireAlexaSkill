@@ -9,10 +9,14 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import com.jamiefarrelly.PayWithFireAlexa.model.Account;
-import com.jamiefarrelly.PayWithFireAlexa.model.Accounts;
-import com.jamiefarrelly.PayWithFireAlexa.model.ApiAccessToken;
-import com.jamiefarrelly.PayWithFireAlexa.model.NewApiAccessTokenRequest;
+import com.jamiefarrelly.PayWithFireAlexa.model.incoming.ApiAccessToken;
+import com.jamiefarrelly.PayWithFireAlexa.model.incoming.NewApiAccessTokenRequest;
+import com.jamiefarrelly.PayWithFireAlexa.model.incoming.NewBatchRequest;
+import com.jamiefarrelly.PayWithFireAlexa.model.outgoing.Account;
+import com.jamiefarrelly.PayWithFireAlexa.model.outgoing.Accounts;
+import com.jamiefarrelly.PayWithFireAlexa.model.outgoing.NewBatchRequestResponse;
+import com.jamiefarrelly.PayWithFireAlexa.model.type.BatchRequestType;
+import com.jamiefarrelly.PayWithFireAlexa.model.type.OperatingCurrencyType;
 
 public class PayWithFireAPI {
 
@@ -20,6 +24,8 @@ public class PayWithFireAPI {
     
     private static final String CREATE_ACCESS_TOKEN_URL = "https://api.paywithfire.com/business/v1/apps/accesstokens";
     private static final String GET_ACCOUNT_DETAILS_URL = "https://api.paywithfire.com/business/v1/accounts";
+    
+    private static final String CREATE_BATCH_REQUEST_URL = "https://api.paywithfire.com/business/v1/batches";
     
     // for now this is hard coded - don't want to store these details for multiple users for example (security wise)
     // IMPORTANT - never commit these details to the likes of Github
@@ -52,7 +58,36 @@ public class PayWithFireAPI {
         List<Account> accountList = accountsResponse.getBody().getAccounts();
         return accountList;
     }
+    
+    /**
+     * Create a new batch request
+     * 
+     * @return NewBatchRequestResponse
+     */
+    public static NewBatchRequestResponse createBatchRequest(OperatingCurrencyType currency, BatchRequestType batchType) {
+        
+        System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
+        
+        // first, call over to the API to get an access token - see https://paywithfire.com/docs/ for more info
+        ApiAccessToken token = getApiAuthToken();
+        
+        // next, call over to get the details of all of your accounts
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(AUTH_HEADER_TXT, BEARER_TXT + token.getAccessToken());
+        
+        // HttpEntity<String> entity = new HttpEntity<String>("parameters", headers); TODO: cleanup
+        
+        NewBatchRequest newBatchRequest = new NewBatchRequest(); // we'll leave out all the optional fields like batch names and so on
+        newBatchRequest.setCurrency(currency);
+        newBatchRequest.setType(batchType);
+        
+        ResponseEntity<NewBatchRequestResponse> response = 
+                        restTemplate.exchange(CREATE_BATCH_REQUEST_URL, HttpMethod.POST, new HttpEntity<NewBatchRequest>(newBatchRequest, headers), NewBatchRequestResponse.class);
+        
+        return response.getBody();
+    }
 
+    // PRIVATE ------------------------------------------------------------------------------------------------------------------------------
     /**
      * Calls over to get an auth token so we can call other endpoints like the account details endpoint
      * 
