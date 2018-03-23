@@ -28,7 +28,7 @@ public class PayWithFireSpeechlet implements Speechlet {
         Intent intent = request.getIntent();
         String intentName = (intent != null) ? intent.getName() : null;
         
-        if ("PayWithFireIntent".equals(intentName)) {
+        if ("PayWithFireBalanceIntent".equals(intentName)) {
             return getBalanceResponse();
         } else if ("AMAZON.HelpIntent".equals(intentName)) {
             return getHelpResponse();

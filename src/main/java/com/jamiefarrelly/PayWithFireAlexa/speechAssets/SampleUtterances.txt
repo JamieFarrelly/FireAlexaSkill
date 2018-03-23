@@ -1,7 +1,7 @@
-PayWithFireIntent balance
-PayWithFireIntent to check my balance
-PayWithFireIntent for my balance
-PayWithFireIntent how much money i have
-PayWithFireIntent check balance
-PayWithFireIntent what my balance is
-PayWithFireIntent for a balance check
+PayWithFireBalanceIntent balance
+PayWithFireBalanceIntent to check my balance
+PayWithFireBalanceIntent for my balance
+PayWithFireBalanceIntent how much money i have
+PayWithFireBalanceIntent check balance
+PayWithFireBalanceIntent what my balance is
+PayWithFireBalanceIntent for a balance check
