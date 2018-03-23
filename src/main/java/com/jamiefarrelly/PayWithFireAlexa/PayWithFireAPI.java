@@ -47,10 +47,9 @@ public class PayWithFireAPI {
         
         System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
         
-        // first, call over to the API to get an access token - see https://paywithfire.com/docs/ for more info
+        // first, call over to the API to get an access token
         ApiAccessToken token = getApiAuthToken();
         
-        // next, call over to get the details of all of your accounts
         HttpHeaders headers = new HttpHeaders();
         headers.add(AUTH_HEADER_TXT, BEARER_TXT + token.getAccessToken());
         
@@ -70,10 +69,9 @@ public class PayWithFireAPI {
         
         System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
         
-        // first, call over to the API to get an access token - see https://paywithfire.com/docs/ for more info
+        // first, call over to the API to get an access token
         ApiAccessToken token = getApiAuthToken();
         
-        // next, call over to get the details of all of your accounts
         HttpHeaders headers = new HttpHeaders();
         headers.add(AUTH_HEADER_TXT, BEARER_TXT + token.getAccessToken());
         
@@ -99,10 +97,9 @@ public class PayWithFireAPI {
         
         System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
         
-        // first, call over to the API to get an access token - see https://paywithfire.com/docs/ for more info
+        // first, call over to the API to get an access token
         ApiAccessToken token = getApiAuthToken();
         
-        // next, call over to get the details of all of your accounts
         HttpHeaders headers = new HttpHeaders();
         headers.add(AUTH_HEADER_TXT, BEARER_TXT + token.getAccessToken());
         
@@ -118,6 +115,8 @@ public class PayWithFireAPI {
     // PRIVATE ------------------------------------------------------------------------------------------------------------------------------
     /**
      * Calls over to get an auth token so we can call other endpoints like the account details endpoint
+     * 
+     * Take a look at https://paywithfire.com/docs/ for more info
      * 
      * @return ApiAccessToken
      */
