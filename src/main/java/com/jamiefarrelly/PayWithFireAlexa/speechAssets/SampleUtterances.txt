@@ -5,3 +5,5 @@ PayWithFireBalanceIntent how much money i have
 PayWithFireBalanceIntent check balance
 PayWithFireBalanceIntent what my balance is
 PayWithFireBalanceIntent for a balance check
+
+PayWithFireInternalTransferIntent to move {Amount} euros from {FromAccount} to {ToAccount}
