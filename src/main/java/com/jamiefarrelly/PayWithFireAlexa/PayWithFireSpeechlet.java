@@ -133,20 +133,26 @@ public class PayWithFireSpeechlet implements Speechlet {
         
         // make sure the account names that the user said are actually valid account names
         // TODO: Look in to removing the need of slots for account names, you shouldn't need to update LIST_OF_ACCOUNT_NAMES.txt every time you've a new Fire account
+        // https://medium.com/voiceflow/tips-and-gotchas-using-alexa-custom-slots-b88f97f26b06
         if (fromAccountSlot != null && fromAccountSlot.getValue() != null && toAccountSlot != null && toAccountSlot.getValue() != null) {
             
-            String fromAccount = fromAccountSlot.getValue();
-            String toAccount = toAccountSlot.getValue();
+            String fromAccountName = fromAccountSlot.getValue();
+            String toAccountName = toAccountSlot.getValue();
                             
             // Get list of fire accounts
             List<Account> fireAccounts = FIRE_API.getAccounts();
             
-            boolean fromAccountExists = fireAccounts.stream().anyMatch(acc -> acc.getName().equalsIgnoreCase(fromAccount));
-            boolean toAccountExists = fireAccounts.stream().anyMatch(acc -> acc.getName().equalsIgnoreCase(toAccount));
+            // each Fire account has a unique name so using findFirst
+            Account fromAccount = fireAccounts.stream().filter(acc -> acc.getName().equalsIgnoreCase(fromAccountName)).findAny().orElse(null);
+            Account toAccount = fireAccounts.stream().filter(acc -> acc.getName().equalsIgnoreCase(toAccountName)).findFirst().orElse(null);
             
             // paranoid check, should never happen. if we have the account name in LIST_OF_ACCOUNT_NAMES.txt it should match one of your Fire accounts
-            if (fromAccountExists == false || toAccountExists == false) {
+            if (fromAccount == null || toAccount == null) {
                 return getHelpResponse(); // TODO: have 2 help responses for the two different intents
+            }
+            
+            if (fromAccount.getCurrency().getCode() != toAccount.getCurrency().getCode()) {
+                // TODO: we don't allow FX transfers to be made via batches, both accounts must be of the same currency
             }
             
             // FIXME: finally, perform the internal transfer
