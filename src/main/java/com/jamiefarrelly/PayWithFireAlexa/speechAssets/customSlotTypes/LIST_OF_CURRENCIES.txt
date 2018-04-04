@@ -1,0 +1,4 @@
+euro
+euros
+pound
+pounds

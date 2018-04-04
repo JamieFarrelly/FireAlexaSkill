@@ -9,13 +9,15 @@
         {
           "name" : "FromAccount",
           "type": "LIST_OF_ACCOUNT_NAMES"
-        },
-        {
+        },{
           "name" : "ToAccount",
           "type": "LIST_OF_ACCOUNT_NAMES"
         },{
           "name": "Amount",
           "type": "AMAZON.NUMBER"
+        },{
+          "name" : "Currency",
+          "type": "LIST_OF_CURRENCIES"
         }
       ]
     },

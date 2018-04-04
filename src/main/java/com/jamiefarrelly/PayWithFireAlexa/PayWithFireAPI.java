@@ -74,11 +74,13 @@ public class PayWithFireAPI {
      * Transfer money between one fire account to another fire account. Handles the three API calls that are needed to do this.
      * 
      * @param currency
-     * @param amount
+     * @param amountSpoken - if the user says 10 euro; we need to pass 1000 to the API for example so we need to do some changes to what's passed in.
      * @param accountIdFrom
      * @param accountIdTo
      */
-    public void performInternalTransfer(OperatingCurrencyType currency, Long amount, Integer accountIdFrom, Integer accountIdTo) {
+    public void performInternalTransfer(OperatingCurrencyType currency, Integer amountSpoken, Integer accountIdFrom, Integer accountIdTo) {
+        
+        long amount = (long) amountSpoken * 100; // if the amount spoken was 10, we'll pass the amount down to the API as 1000 (1000 cent or pennies)
         
         // create a batch
         NewBatchRequestResponse newBatchResponse = createBatchRequest(currency, BatchRequestType.INTERNAL_TRANSFER);
