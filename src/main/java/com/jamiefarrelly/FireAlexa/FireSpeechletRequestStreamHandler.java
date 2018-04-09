@@ -1,4 +1,4 @@
-package com.jamiefarrelly.PayWithFireAlexa;
+package com.jamiefarrelly.FireAlexa;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -8,13 +8,13 @@ import com.amazon.speech.speechlet.lambda.SpeechletRequestStreamHandler;
 /**
  * This class could be the handler for an AWS Lambda function powering an Alexa Skills Kit
  * experience. To do this, simply set the handler field in the AWS Lambda console to
- * "com.jamiefarrelly.PayWithFireAlexa.PayWithFireSpeechletRequestStreamHandler" For this to work, you'll also need to build
+ * "com.jamiefarrelly.FireAlexa.FireSpeechletRequestStreamHandler" For this to work, you'll also need to build
  * this project using the {@code lambda-compile} Ant task and upload the resulting zip file to power
  * your function.
  * 
  * Based on https://github.com/amzn/alexa-skills-kit-java
  */
-public final class PayWithFireSpeechletRequestStreamHandler extends SpeechletRequestStreamHandler {
+public final class FireSpeechletRequestStreamHandler extends SpeechletRequestStreamHandler {
     
     private static final Set<String> supportedApplicationIds;
     
@@ -27,7 +27,7 @@ public final class PayWithFireSpeechletRequestStreamHandler extends SpeechletReq
         supportedApplicationIds.add("YOUR_ALEXA_SKILL_ID_HERE");
     }
 
-    public PayWithFireSpeechletRequestStreamHandler() {
-        super(new PayWithFireSpeechlet(), supportedApplicationIds);
+    public FireSpeechletRequestStreamHandler() {
+        super(new FireSpeechlet(), supportedApplicationIds);
     }
 }

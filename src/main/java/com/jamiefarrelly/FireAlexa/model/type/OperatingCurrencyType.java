@@ -1,4 +1,4 @@
-package com.jamiefarrelly.PayWithFireAlexa.model.type;
+package com.jamiefarrelly.FireAlexa.model.type;
 
 public enum OperatingCurrencyType {
     

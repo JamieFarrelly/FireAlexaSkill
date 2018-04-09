@@ -1,11 +1,12 @@
-package com.jamiefarrelly.PayWithFireAlexa;
+package com.jamiefarrelly.FireAlexa;
 
 import java.util.List;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.jamiefarrelly.PayWithFireAlexa.model.outgoing.Account;
+import com.jamiefarrelly.FireAlexa.FireAPI;
+import com.jamiefarrelly.FireAlexa.model.outgoing.Account;
 
 /**
  * 
@@ -13,13 +14,13 @@ import com.jamiefarrelly.PayWithFireAlexa.model.outgoing.Account;
  * which is in the Alexa developer console.
  *
  */
-public class PayWithFireAPITest {
+public class FireAPITest {
     
-    private static final PayWithFireAPI FIRE_API = new PayWithFireAPI();
+    private static final FireAPI FIRE_API = new FireAPI();
     
     /**
      * 
-     * Before running this, make sure you've changed the API application details in PayWithFireAPI
+     * Before running this, make sure you've changed the API application details in FireAPI
      * Pretty much just a check to make sure your API application details are correct before deploying JAR to Lambda
      * 
      */

@@ -1,0 +1,9 @@
+FireBalanceIntent balance
+FireBalanceIntent to check my balance
+FireBalanceIntent for my balance
+FireBalanceIntent how much money i have
+FireBalanceIntent check balance
+FireBalanceIntent what my balance is
+FireBalanceIntent for a balance check
+
+FireInternalTransferIntent to move {Amount} {Currency} from {FromAccount} to {ToAccount}

@@ -1,7 +1,7 @@
-package com.jamiefarrelly.PayWithFireAlexa.model.incoming;
+package com.jamiefarrelly.FireAlexa.model.incoming;
 
-import com.jamiefarrelly.PayWithFireAlexa.model.type.BatchRequestType;
-import com.jamiefarrelly.PayWithFireAlexa.model.type.OperatingCurrencyType;
+import com.jamiefarrelly.FireAlexa.model.type.BatchRequestType;
+import com.jamiefarrelly.FireAlexa.model.type.OperatingCurrencyType;
 
 public class NewBatchRequest {
 

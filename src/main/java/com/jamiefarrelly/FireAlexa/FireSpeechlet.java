@@ -1,4 +1,4 @@
-package com.jamiefarrelly.PayWithFireAlexa;
+package com.jamiefarrelly.FireAlexa;
 
 import java.util.List;
 
@@ -15,8 +15,8 @@ import com.amazon.speech.speechlet.SpeechletResponse;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
-import com.jamiefarrelly.PayWithFireAlexa.model.outgoing.Account;
-import com.jamiefarrelly.PayWithFireAlexa.model.type.OperatingCurrencyType;
+import com.jamiefarrelly.FireAlexa.model.outgoing.Account;
+import com.jamiefarrelly.FireAlexa.model.type.OperatingCurrencyType;
 
 /**
  * Two main flows at the moment:
@@ -26,11 +26,11 @@ import com.jamiefarrelly.PayWithFireAlexa.model.type.OperatingCurrencyType;
  * 
  * Based on https://github.com/amzn/alexa-skills-kit-java
  */
-public class PayWithFireSpeechlet implements Speechlet {
+public class FireSpeechlet implements Speechlet {
     
-    private static final PayWithFireAPI FIRE_API = new PayWithFireAPI();
+    private static final FireAPI FIRE_API = new FireAPI();
     
-    private static final String WELCOME_AND_HELP_SPEECH_TEXT = "Welcome to the Pay with Fire, you can ask for your balance or moving money between your Fire accounts";
+    private static final String WELCOME_AND_HELP_SPEECH_TEXT = "Welcome to Fire, you can ask for your balance or moving money between your Fire accounts";
     private static final String INTERNAL_TRANSFER_AMOUNT_ERROR = "Sorry, I did not hear the amount. Please say again?";
     private static final String INTERNAL_TRANSFER_ACCOUNT_CURRENCY_ERROR = "Sorry, I did not hear the currency. Please say again?";
     private static final String INTERNAL_TRANSFER_ACCOUNTS_ERROR = "Sorry, I couldn't find both of those accounts. Please say again?";
@@ -48,9 +48,9 @@ public class PayWithFireSpeechlet implements Speechlet {
         Intent intent = request.getIntent();
         String intentName = (intent != null) ? intent.getName() : null;
         
-        if ("PayWithFireBalanceIntent".equals(intentName)) {
+        if ("FireBalanceIntent".equals(intentName)) {
             return getBalanceResponse();
-        } else if ("PayWithFireInternalTransferIntent".equals(intentName)) {
+        } else if ("FireInternalTransferIntent".equals(intentName)) {
             return getMakeInternalTransferResponse(intent);
         } else if ("AMAZON.HelpIntent".equals(intentName)) {
             return getAskSpeechletResponse(WELCOME_AND_HELP_SPEECH_TEXT);
@@ -84,7 +84,7 @@ public class PayWithFireSpeechlet implements Speechlet {
 
         // Create the Simple card content.
         SimpleCard card = new SimpleCard();
-        card.setTitle("PayWithFire");
+        card.setTitle("Fire");
         card.setContent(WELCOME_AND_HELP_SPEECH_TEXT);
 
         // Create the plain text output.
@@ -99,7 +99,7 @@ public class PayWithFireSpeechlet implements Speechlet {
     }
     
     /**
-     * Creates a {@code SpeechletResponse} for the Pay with Fire intent.
+     * Creates a {@code SpeechletResponse} for the Fire intent.
      *
      * @return SpeechletResponse spoken and visual response for the given intent
      */
@@ -124,7 +124,7 @@ public class PayWithFireSpeechlet implements Speechlet {
 
         // Create the Simple card content.
         SimpleCard card = new SimpleCard();
-        card.setTitle("PayWithFire");
+        card.setTitle("Fire");
         card.setContent(speechText);
 
         // Create the plain text output.
@@ -213,7 +213,7 @@ public class PayWithFireSpeechlet implements Speechlet {
             
             // Create the Simple card content.
             SimpleCard card = new SimpleCard();
-            card.setTitle("PayWithFire");
+            card.setTitle("Fire");
             card.setContent(speechText);
 
             // Create the plain text output.
@@ -239,7 +239,7 @@ public class PayWithFireSpeechlet implements Speechlet {
 
         // Create the Simple card content.
         SimpleCard card = new SimpleCard();
-        card.setTitle("PayWithFire");
+        card.setTitle("Fire");
         card.setContent(speechText);
 
         // Create the plain text output.

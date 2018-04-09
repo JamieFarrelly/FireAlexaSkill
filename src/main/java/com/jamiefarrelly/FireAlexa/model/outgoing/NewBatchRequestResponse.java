@@ -1,4 +1,4 @@
-package com.jamiefarrelly.PayWithFireAlexa.model.outgoing;
+package com.jamiefarrelly.FireAlexa.model.outgoing;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

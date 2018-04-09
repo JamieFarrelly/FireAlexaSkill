@@ -1,10 +1,10 @@
 {
   "intents": [
     {
-      "intent": "PayWithFireBalanceIntent"
+      "intent": "FireBalanceIntent"
     },
     {
-      "intent": "PayWithFireInternalTransferIntent",
+      "intent": "FireInternalTransferIntent",
       "slots": [
         {
           "name" : "FromAccount",

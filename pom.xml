@@ -2,11 +2,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.jamiefarrelly</groupId>
-    <artifactId>PayWithFireAlexa</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>FireAlexa</artifactId>
+    <version>0.0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>PayWithFireAlexa</name>
+    <name>FireAlexa</name>
     <url>http://maven.apache.org</url>
 
     <properties>

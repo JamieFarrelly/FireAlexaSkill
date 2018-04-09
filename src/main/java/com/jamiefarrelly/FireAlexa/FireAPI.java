@@ -1,4 +1,4 @@
-package com.jamiefarrelly.PayWithFireAlexa;
+package com.jamiefarrelly.FireAlexa;
 
 import java.util.List;
 
@@ -9,17 +9,17 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import com.jamiefarrelly.PayWithFireAlexa.model.incoming.ApiAccessToken;
-import com.jamiefarrelly.PayWithFireAlexa.model.incoming.NewApiAccessTokenRequest;
-import com.jamiefarrelly.PayWithFireAlexa.model.incoming.NewBatchRequest;
-import com.jamiefarrelly.PayWithFireAlexa.model.incoming.NewBatchRequestItemInternalTransfer;
-import com.jamiefarrelly.PayWithFireAlexa.model.outgoing.Account;
-import com.jamiefarrelly.PayWithFireAlexa.model.outgoing.Accounts;
-import com.jamiefarrelly.PayWithFireAlexa.model.outgoing.NewBatchRequestResponse;
-import com.jamiefarrelly.PayWithFireAlexa.model.type.BatchRequestType;
-import com.jamiefarrelly.PayWithFireAlexa.model.type.OperatingCurrencyType;
+import com.jamiefarrelly.FireAlexa.model.incoming.ApiAccessToken;
+import com.jamiefarrelly.FireAlexa.model.incoming.NewApiAccessTokenRequest;
+import com.jamiefarrelly.FireAlexa.model.incoming.NewBatchRequest;
+import com.jamiefarrelly.FireAlexa.model.incoming.NewBatchRequestItemInternalTransfer;
+import com.jamiefarrelly.FireAlexa.model.outgoing.Account;
+import com.jamiefarrelly.FireAlexa.model.outgoing.Accounts;
+import com.jamiefarrelly.FireAlexa.model.outgoing.NewBatchRequestResponse;
+import com.jamiefarrelly.FireAlexa.model.type.BatchRequestType;
+import com.jamiefarrelly.FireAlexa.model.type.OperatingCurrencyType;
 
-public class PayWithFireAPI {
+public class FireAPI {
 
     private static RestTemplate restTemplate = new RestTemplate();
     
@@ -98,7 +98,7 @@ public class PayWithFireAPI {
     /**
      * Calls over to get an auth token so we can call other endpoints like the account details endpoint
      * 
-     * Take a look at https://paywithfire.com/docs/ for more info
+     * Take a look at https://fire.com/docs/ for more info
      * 
      * @return ApiAccessToken
      */
@@ -108,10 +108,10 @@ public class PayWithFireAPI {
         
         Long now = System.currentTimeMillis();
         
-        // 3 pieces of info you get from business.paywithfire.com
+        // 3 pieces of info you get from business.fire.com
         newApiAccessTokenRequest.setClientId(CLIENT_ID);
         newApiAccessTokenRequest.setRefreshToken(REFRESH_TOKEN);
-        newApiAccessTokenRequest.setClientSecret(DigestUtils.sha256Hex(now + CLIENT_KEY)); // as per docs https://paywithfire.com/docs/ 
+        newApiAccessTokenRequest.setClientSecret(DigestUtils.sha256Hex(now + CLIENT_KEY)); // as per docs https://fire.com/docs/ 
         
         newApiAccessTokenRequest.setNonce(now);
         
