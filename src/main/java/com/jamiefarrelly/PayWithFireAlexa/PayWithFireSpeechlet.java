@@ -55,7 +55,7 @@ public class PayWithFireSpeechlet implements Speechlet {
         } else if ("AMAZON.HelpIntent".equals(intentName)) {
             return getAskSpeechletResponse(WELCOME_AND_HELP_SPEECH_TEXT);
         } else {
-            throw new SpeechletException("Invalid Intent");
+            throw new SpeechletException("Invalid Intent, the passed in intent was: " + intentName);
         }
     }
 
