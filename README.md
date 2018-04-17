@@ -20,4 +20,4 @@ To get started
 
 Why you have to deploy the skill yourself
 --------------------------
-There's no reason why this skill couldn't be available to everyone and be up on the Alexa Skills Store, but there's a bit to think about first...you'd have to store people's CLIENT_KEYs etc. and store them securly since they could be used to make payments in the future, not just read only access. Because of this, I've kept it to work with just one account but feel free to clone the repo and use it yourself.
+There's no reason why this skill couldn't be available to everyone and be up on the Alexa Skills Store, but there's a bit to think about first...you'd have to store people's CLIENT_KEYs etc. and store them securely since they can potentially be used to make payments depending on the permissions assigned to the API application. I've kept it to work with just one account but feel free to clone the repo and use it yourself.
