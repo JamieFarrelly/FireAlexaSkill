@@ -23,8 +23,8 @@ public class FireAPI {
 
     private static RestTemplate restTemplate = new RestTemplate();
     
-    private static final String CREATE_ACCESS_TOKEN_URL = "https://api.paywithfire.com/business/v1/apps/accesstokens";
-    private static final String GET_ACCOUNT_DETAILS_URL = "https://api.paywithfire.com/business/v1/accounts";
+    private static final String CREATE_ACCESS_TOKEN_URL = "https://api.fire.com/business/v1/apps/accesstokens";
+    private static final String GET_ACCOUNT_DETAILS_URL = "https://api.fire.com/business/v1/accounts";
     
     /*
      * To move money around in Fire, you must do the following:
@@ -35,9 +35,9 @@ public class FireAPI {
      *  To keep things simple, we'll do all of this at once when someone asks Alexa to "move €x from AccountA to AccountB".
      *  We're only dealing with moving money from one of your own Fire accounts to another one of your Fire accounts.
      */
-    private static final String CREATE_BATCH_REQUEST_URL = "https://api.paywithfire.com/business/v1/batches";
-    private static final String ADD_INTERNAL_TRANSFER_ITEM_TO_BATCH_REQUEST_URL = "https://api.paywithfire.com/business/v1/batches/{uuid}/internaltransfers";
-    private static final String SUBMIT_BATCH_REQUEST_URL = "https://api.paywithfire.com/business/v1/batches/{uuid}";
+    private static final String CREATE_BATCH_REQUEST_URL = "https://api.fire.com/business/v1/batches";
+    private static final String ADD_INTERNAL_TRANSFER_ITEM_TO_BATCH_REQUEST_URL = "https://api.fire.com/business/v1/batches/{uuid}/internaltransfers";
+    private static final String SUBMIT_BATCH_REQUEST_URL = "https://api.fire.com/business/v1/batches/{uuid}";
     
     // for now this is hard coded - don't want to store these details for multiple users for example (security wise)
     // IMPORTANT - never commit these details to the likes of Github
